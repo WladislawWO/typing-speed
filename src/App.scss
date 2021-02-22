@@ -66,10 +66,21 @@ input {
   max-width: 50%;
 }
 
-.score {
+.controlls {
+  display: flex;
+  justify-content: center;
+}
+
+.controll {
   color: white;
   font-weight: 700;
   text-align: center;
+  margin-right: 10px;
+  display: flex;
+}
+
+.text {
+  font-size: 13px;
 }
 
 span {

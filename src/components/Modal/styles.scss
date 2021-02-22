@@ -1,0 +1,21 @@
+.modal {
+    background-color: white;
+    border-radius: 10px;
+    padding: 20px;
+    height: 200px;
+    position: relative;
+    display: none;
+    &.active {
+        display: block;
+    }
+}
+
+.close-modal {
+    position: absolute;
+    right: 5px;
+    top: 5x;
+    svg {
+        width: 16px;
+        width: 16px;
+    }
+}
