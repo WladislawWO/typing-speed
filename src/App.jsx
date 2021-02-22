@@ -10,43 +10,40 @@ const getWords = (lang) => {
   }).join(" ");
 }
 
+const initialTyping = { value: '', mistake: '' };
+
 function App() {
   const ref = useRef(null);
+  const [value, setValue] = useState({});
   const [language, setLanguage] = useState('eng');
-  const [typing, setTyping] = useState({ value: '', mistake: '' });
+  const [typing, setTyping] = useState(initialTyping);
   const [words, setWords] = useState(getWords(language));
-  // const [timer, setTime] = useState(60);
-  const [writenWords, setWritenWords] = useState('');
+  const [writenWords, setWritenWords] = useState(0);
 
-  const handleChange = (e) => {
-    console.log({e, typing})
-    const { key, keyCode } = e;
+  useEffect(() => {
+    console.log(value)
+    const { key, keyCode } = value;
     if((keyCode > 64 && keyCode < 91) || (keyCode > 96 && keyCode < 123)) {
-      setTyping((i) => ({...i, value: i.value + key}));
-      if(key === words[0]) {
+      if(key === words[0] && !typing.mistake) {
+        setTyping((i) => ({...i, value: i.value + key}));
         setWords((words) => words.slice(1));
-        setWritenWords(writenWords + key);
       }else {
         setTyping((i) => ({...i, mistake: i.mistake + key}));
       }
     } else if(keyCode === 8) {
       if(typing.mistake) setTyping((i) => ({...i, mistake: i.mistake.slice(0, -1)}));
-      else if(typing.value) setTyping((i) => ({...i, mistake: i.mistake.slice(0, -1)}));
+      else if(typing.value) {
+        setTyping((i) => ({...i, value: i.value.slice(0, -1)}));
+        setWords(typing.value.slice(-1) + words);
+      }
+    } else if(keyCode === 32) {
+      setWritenWords(writenWords + 1);
+      setTyping(initialTyping);
+      setWords((words) => words.slice(1));
     }
-  }
+  }, [value]);
 
   const handleClick = () => ref && ref.current && ref.current.focus();
-
-  // const [seconds, setSeconds] = useState(5);
-
-  // useEffect(() => {
-  //   if(writenWords.length === 1) {
-  //     const interval = setInterval(() => {
-  //       setSeconds(seconds => seconds - 1);
-  //     }, 1000);
-  //     return () => clearInterval(interval);
-  //   }
-  // }, [writenWords.length]);
 
   const changeLanguage = (lang) => {
     setWords(getWords(lang));
@@ -54,7 +51,7 @@ function App() {
   }
 
   useEffect(() => {
-   document.addEventListener("keydown", (e) => handleChange(e));
+   document.addEventListener("keydown", (e) => setValue(e));
   }, [])
 
   return (
@@ -65,14 +62,12 @@ function App() {
       </div>
       <div className="wrapper">
         <div className="score">
-          {writenWords.length}
-          {/* <span>{seconds}</span> */}
+          {writenWords} Words
         </div>
         <div className="container" onClick={handleClick}>
           <div className="writenWords">
-            <div className={`typing ${typing.mistake ? 'mistake' : ''}`}>{typing.value}</div>
+            <div className={`typing ${typing.mistake ? 'mistake' : ''}`}>{typing.value + typing.mistake}</div>
           </div>
-          {/* <input onChange={handleChange} value={value} autoFocus ref={ref} /> */}
           <div className="words">{words}</div>
         </div>
       </div>

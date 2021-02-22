@@ -40,9 +40,16 @@ input {
   color: #5cdb95;
   text-align: right;
   direction: rtl;
-  &.mistake {
-    text-decoration: line-through;
-  }
+  margin-left: 10px;
+}
+
+.mistake {
+  text-decoration: line-through;
+}
+
+.written {
+  color: lightgray;
+  margin-right: 10px;
 }
 
 .writenWords {
@@ -50,6 +57,7 @@ input {
   max-width: 50%;
   text-align: end;
   overflow: hidden;
+  color: lightgray;
 }
 
 .words {
