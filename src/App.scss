@@ -1,0 +1,91 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;700&display=swap');
+.App {
+  background-color: #5cdb95;
+  height: 100vh;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 40px;
+  position: relative;
+  font-family: 'Roboto';
+}
+
+.container {
+  display: flex;
+  align-items: center;
+  white-space: nowrap;
+  height: 150px;
+  width: 600px;
+  border-radius: 10px;
+  background-color: white;
+  overflow: hidden;
+  position: relative;
+}
+
+input {
+  border: none;
+  width: 33px;
+  color: #5cdb95;
+  text-align: end;
+  border-radius: 10px;
+  outline: none;
+  font-size: 40px;
+  margin-left: 50%;
+  font-family: 'Roboto';
+  position: absolute;
+}
+
+.typing {
+  color: #5cdb95;
+  text-align: right;
+  direction: rtl;
+  &.mistake {
+    text-decoration: line-through;
+  }
+}
+
+.writenWords {
+  min-width: 50%;
+  max-width: 50%;
+  text-align: end;
+  overflow: hidden;
+}
+
+.words {
+  white-space: pre;
+  min-width: 50%;
+  max-width: 50%;
+}
+
+.score {
+  color: white;
+  font-weight: 700;
+  text-align: center;
+}
+
+span {
+  margin: 0 10px;
+}
+
+.changeLanguage {
+  display: flex;
+  color: white;
+  font-size: 14px;
+  font-weight: 700;
+  position: absolute;
+  top: 30px;
+  right: 20px;
+  .item {
+    margin: 0 5px;
+    cursor: pointer;
+    &.active::before {
+        content: '';
+        width: 20px;
+        position: absolute;
+        background-color: white;
+        height: 3px;
+        bottom: -4px;
+    }
+  }
+}
