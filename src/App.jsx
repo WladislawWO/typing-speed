@@ -12,7 +12,7 @@ function App() {
   const [value, setValue] = useState({});
   const [typing, setTyping] = useState(initialTyping);
   const [words, setWords] = useState(getWords('eng'));
-  const [writenWords, setWritenWords] = useState(0);
+  const [writtenWords, setwrittenWords] = useState([]);
 
   useEffect(() => {
     const { key, keyCode } = value;
@@ -30,7 +30,7 @@ function App() {
         setWords(typing.value.slice(-1) + words);
       }
     } else if(keyCode === 32) {
-      if(!typing.mistake) setWritenWords(writenWords + 1);
+      if(!typing.mistake) setwrittenWords((i) => [typing, ...i]);
       setTyping({...initialTyping, startTyping: true});
       setWords((words) => words.slice(1));
     }
@@ -42,7 +42,7 @@ function App() {
     setTyping(initialTyping)
     setTimeout(() => {
       setOpen(false);
-      setWritenWords(0);
+      setwrittenWords([]);
     }, 4000);
   }
 
@@ -55,18 +55,19 @@ function App() {
       <Language changeLanguage={(lang) => setWords(getWords(lang))} />
       <div className="wrapper">
         <Controlls
-          writenWords={writenWords}
+          writtenWords={writtenWords}
           handleTimeOut={handleTimeOut}
           typing={typing}
         />
         <div className="container" >
-          <div className="writenWords">
+          <div className="writtenWords">
             <div className={`typing ${typing.mistake ? 'mistake' : ''}`}>{typing.value + typing.mistake}</div>
+            {writtenWords.map((item, i) => <span key={i}>{item.value + item.mistake}</span>)}
           </div>
           <div className="words">{words}</div>
         </div>
       </div>
-      <Modal open={open} words={writenWords} setOpen={setOpen} />
+      <Modal open={open} words={writtenWords} setOpen={setOpen} />
     </div>
   );
 }

@@ -9,7 +9,7 @@ export default function Modal({ open, words, setOpen}) {
                 onClick={() => setOpen(false)}
             >
             </div>
-            Congrat! Your typing speed - {words}
+            Congrat! Your typing speed - {words.length}
         </div>
     )
 }
