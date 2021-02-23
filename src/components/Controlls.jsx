@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react'
 import {usePrevious} from "../hooks"
 
-export default function Controlls({ writenWords, handleTimeOut, typing }) {
+export default function Controlls({ writtenWords, handleTimeOut, typing }) {
     const [timer, setTimer] = useState(60);
     const prev = usePrevious(typing);
 
@@ -19,7 +19,7 @@ export default function Controlls({ writenWords, handleTimeOut, typing }) {
     return (
         <div className="controlls">
           <div className="controll">
-            {writenWords}
+            {writtenWords.length}
             <div className="text">Words</div>
           </div>
           <div className="controll">
