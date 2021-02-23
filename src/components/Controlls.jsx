@@ -1,15 +1,20 @@
 import React, {useEffect, useState} from 'react'
+import {usePrevious} from "../hooks"
 
-export default function Controlls({ writenWords, handleTimeOut }) {
+export default function Controlls({ writenWords, handleTimeOut, typing }) {
     const [timer, setTimer] = useState(60);
+    const prev = usePrevious(typing);
 
     useEffect(() => {
-          const interval = setInterval(() => setTimer((timer) => timer - 1), 1000);
-          setTimeout(() => {
-              clearInterval(interval);
-              handleTimeOut();
-          }, 60000);
-      }, []);
+      if(typing.startTyping && !prev.startTyping) {
+        const interval = setInterval(() => setTimer((timer) => timer - 1), 1000);
+        setTimeout(() => {
+            clearInterval(interval);
+            handleTimeOut();
+            setTimer(60)
+        }, 60000);
+      }
+    }, [typing]);
 
     return (
         <div className="controlls">

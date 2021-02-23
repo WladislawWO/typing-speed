@@ -1,14 +1,13 @@
 import React from 'react'
-import { CloseSvg } from '../assets'
+import './styles.scss';
 
 export default function Modal({ open, words, setOpen}) {
     return (
-        <div className={`modal ${open}`}>
+        <div className={`modal ${open ? 'active' : ''}`}>
             <div 
                 className="close-modal"
                 onClick={() => setOpen(false)}
             >
-                <CloseSvg />
             </div>
             Congrat! Your typing speed - {words}
         </div>
