@@ -10,6 +10,7 @@ const initialTyping = { value: '', mistake: '', startTyping: false };
 function App() {
   const [open, setOpen] = useState(false);
   const [value, setValue] = useState({});
+  const [result, setResult] = useState(0);
   const [typing, setTyping] = useState(initialTyping);
   const [words, setWords] = useState(getWords('eng'));
   const [writtenWords, setwrittenWords] = useState([]);
@@ -30,20 +31,20 @@ function App() {
         setWords(typing.value.slice(-1) + words);
       }
     } else if(keyCode === 32) {
-      if(!typing.mistake) setwrittenWords((i) => [typing, ...i]);
+      setwrittenWords((i) => [typing, ...i]);
       setTyping({...initialTyping, startTyping: true});
-      setWords((words) => words.slice(1));
+      if(words[0] === " ") setWords((words) => words.slice(1));
+      else setWords((words) => words.slice(words.indexOf(" ") + 1));
     }
   }, [value]);
 
   const handleTimeOut = () => {
+    setResult(writtenWords);
     setOpen(true);
     setValue({});
     setTyping(initialTyping)
-    setTimeout(() => {
-      setOpen(false);
-      setwrittenWords([]);
-    }, 4000);
+    setwrittenWords([]);
+    setTimeout(() => setOpen(false), 4000);
   }
 
   useEffect(() => {
@@ -67,7 +68,12 @@ function App() {
           <div className="words">{words}</div>
         </div>
       </div>
-      <Modal open={open} words={writtenWords} setOpen={setOpen} />
+      <Modal
+        open={open}
+        words={result}
+        setOpen={setOpen}
+        typing={typing}
+      />
     </div>
   );
 }

@@ -23,6 +23,10 @@ export default function Controlls({ writtenWords, handleTimeOut, typing }) {
             <div className="text">Words</div>
           </div>
           <div className="controll">
+            {writtenWords.reduce((a,b) => a + b.value.length, 0) + typing.value.length}
+            <div className="text">Chars</div>
+          </div>
+          <div className="controll">
             {timer}
             <div className="text">Seconds</div>
           </div>
